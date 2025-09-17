@@ -1,16 +1,23 @@
 document.getElementById("searchForm").addEventListener("change", async function(e) {
     e.preventDefault();
+    await doSearch(this);
+    renderBooks(data);
+});
 
-    let formData = new FormData(this);
+searchForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    await doSearch(this);
+});
+
+async function doSearch(form) {
+    let formData = new FormData(form);
     let response = await fetch("../api/form_search_books.php", {
-        method:"POST",
-        body:formData
+        method: "POST",
+        body: formData
     });
     let data = await response.json();
-
     renderBooks(data);
-
-})
+}
 
 function renderBooks(data){
     let container = document.getElementById("booksContainer");
